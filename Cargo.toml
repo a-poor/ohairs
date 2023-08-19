@@ -2,6 +2,11 @@
 name = "ohairs"
 version = "0.1.0"
 edition = "2021"
+authors = ["Austin Poor <45295232+a-poor@users.noreply.github.com>"]
+description = "A basic library for interacting with the OpenAI API."
+readme = "README.md"
+license = "MIT"
+repository = "https://github.com/a-poor/ohairs"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
