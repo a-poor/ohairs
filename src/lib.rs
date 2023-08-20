@@ -1,5 +1,24 @@
-pub fn add(left: usize, right: usize) -> usize {
-    left + right
+pub mod blocking;
+pub mod dtypes;
+
+pub const BASE_URL: &str = "https://api.openai.com/";
+
+pub struct Client {
+    pub base_url: String,
+    pub api_key: String,
+    pub org_id: Option<String>,
+    pub req_client: reqwest::Client,
+}
+
+impl Client {
+    pub fn new(api_key: &str) -> Self {
+        Self {
+            base_url: BASE_URL.to_string(),
+            api_key: api_key.to_string(),
+            org_id: None,
+            req_client: reqwest::Client::new(),
+        }
+    }
 }
 
 #[cfg(test)]
@@ -8,7 +27,6 @@ mod tests {
 
     #[test]
     fn it_works() {
-        let result = add(2, 2);
-        assert_eq!(result, 4);
+        let _ = Client::new("test");
     }
 }
