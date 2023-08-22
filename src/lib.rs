@@ -8,6 +8,9 @@ use dtypes::{ChatCompletionChunk, ChatCompletionObject, ChatCompletionRequest};
 pub mod blocking;
 pub mod dtypes;
 
+#[cfg(feature = "mock")]
+pub mod mock;
+
 pub const BASE_URL: &str = "https://api.openai.com/";
 
 pub struct Client {
