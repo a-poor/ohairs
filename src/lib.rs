@@ -3,7 +3,9 @@ use reqwest::{Method, Request, RequestBuilder};
 use serde::{Deserialize, Serialize};
 use url::Url;
 
-use dtypes::{ChatCompletionChunk, ChatCompletionObject, ChatCompletionRequest};
+use dtypes::{
+    ChatCompletionChunk, ChatCompletionObject, ChatCompletionRequest, ListModelsResponse,
+};
 
 pub mod blocking;
 pub mod dtypes;
@@ -148,12 +150,6 @@ impl Client {
     // }
 }
 
-#[derive(Debug, Serialize, Deserialize)]
-pub struct ListModelsResponse {
-    pub object: String,
-    pub data: Vec<dtypes::ModelObject>,
-}
-
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -162,6 +158,42 @@ mod tests {
     #[tokio::test]
     async fn it_works() -> Result<()> {
         let _ = Client::new("test");
+        Ok(())
+    }
+
+    /// NOTE - This test requires a running mock server.
+    #[tokio::test]
+    async fn create_chat_completion_sync() -> Result<()> {
+        // Create a client...
+        let mut client = Client::new("test");
+        client.base_url = "http://localhost:1323".to_string();
+
+        let req = ChatCompletionRequest {
+            model: "gpt-3.5-turbo".to_string(),
+            stream: Some(false),
+            messages: vec![],
+            ..Default::default()
+        };
+
+        let _res = client.create_chat_completion(req).await?;
+        Ok(())
+    }
+
+    /// NOTE - This test requires a running mock server.
+    #[tokio::test]
+    async fn create_chat_completion_async() -> Result<()> {
+        // Create a client...
+        let mut client = Client::new("test");
+        client.base_url = "http://localhost:1323".to_string();
+
+        let req = ChatCompletionRequest {
+            model: "gpt-3.5-turbo".to_string(),
+            stream: Some(false),
+            messages: vec![],
+            ..Default::default()
+        };
+
+        let _res = client.create_chat_completion(req).await?;
         Ok(())
     }
 }
